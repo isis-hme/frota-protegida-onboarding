@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Frota Protegida – Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --orange:        #F58A4B;
+  --orange-dark:   #D4641A;
+  --orange-light:  #FFF5EF;
+  --orange-border: #FDDCC4;
+  --text-1: #111118;
+  --text-2: #52526A;
+  --text-3: #9898B0;
+  --border: #E8E8F2;
+  --bg:     #F2F3F8;
+  --card:   #FFFFFF;
+  --green:       #16A34A;
+  --green-bg:    #F0FDF4;
+  --green-border:#BBF7D0;
+  --red:         #DC2626;
+  --red-bg:      #FEF2F2;
+  --red-border:  #FECACA;
+  --blue:        #4F46E5;
+  --blue-bg:     #EEF2FF;
+  --blue-border: #C7D2FE;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 36px 20px 80px;
+}
+
+/* ── SHELL ─────────────────────────────────────── */
+.shell {
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOP NAV ───────────────────────────────────── */
+.topnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-1);
+}
+.brand-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: pulse-dot 2s infinite;
+}
+.skip-btn {
+  font-size: 12px; color: var(--text-3);
+  background: none; border: none;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer; padding: 4px 8px;
+  border-radius: 6px;
+  transition: color .15s, background .15s;
+}
+.skip-btn:hover { color: var(--text-2); background: var(--border); }
+
+/* ── PROGRESS ──────────────────────────────────── */
+.progress-wrap { margin-bottom: 32px; }
+.progress-top  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.progress-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--orange);
+}
+.progress-count { font-size: 11px; color: var(--text-3); }
+.progress-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: 2px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+.step-dots { display: flex; gap: 5px; }
+.step-dot {
+  height: 3px; border-radius: 2px;
+  background: var(--border);
+  transition: width .4s cubic-bezier(.4,0,.2,1), background .3s;
+  width: 20px;
+}
+.step-dot.done   { background: var(--orange-border); }
+.step-dot.active { background: var(--orange); width: 38px; }
+
+/* ── ANIMATIONS ────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes popIn {
+  from { opacity:0; transform:scale(.7) translateY(12px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(28px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes slideInBack {
+  from { opacity:0; transform:translateX(-28px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes slideOut {
+  from { opacity:1; transform:translateX(0); }
+  to   { opacity:0; transform:translateX(-24px); }
+}
+@keyframes pulse-dot {
+  0%,100% { box-shadow:0 0 0 0 rgba(245,138,75,.4); }
+  50%      { box-shadow:0 0 0 6px rgba(245,138,75,0); }
+}
+@keyframes pulse-cta {
+  0%,100% { box-shadow:0 4px 20px rgba(245,138,75,.4); }
+  50%      { box-shadow:0 4px 32px rgba(245,138,75,.6); }
+}
+@keyframes countUp {
+  0%   { content:"0"; }
+  100% { content:attr(data-val); }
+}
+@keyframes drawCheck {
+  from { stroke-dashoffset: 30; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes barFill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* stagger */
+.a1 { opacity:0; animation: fadeUp .5s cubic-bezier(.22,.68,0,1.1) .05s forwards; }
+.a2 { opacity:0; animation: fadeUp .5s cubic-bezier(.22,.68,0,1.1) .14s forwards; }
+.a3 { opacity:0; animation: fadeUp .5s cubic-bezier(.22,.68,0,1.1) .23s forwards; }
+.a4 { opacity:0; animation: fadeUp .5s cubic-bezier(.22,.68,0,1.1) .32s forwards; }
+.a5 { opacity:0; animation: fadeUp .5s cubic-bezier(.22,.68,0,1.1) .41s forwards; }
+.a6 { opacity:0; animation: fadeUp .5s cubic-bezier(.22,.68,0,1.1) .50s forwards; }
+.pop { opacity:0; animation: popIn .6s cubic-bezier(.22,.68,0,1.4) forwards; }
+
+/* content transition */
+.step-content { min-height: 380px; }
+.step-content.out      { animation: slideOut .22s ease forwards; pointer-events:none; }
+.step-content.in       { animation: slideIn  .36s cubic-bezier(.22,.68,0,1) forwards; }
+.step-content.in-back  { animation: slideInBack .36s cubic-bezier(.22,.68,0,1) forwards; }
+
+/* ── SHARED ELEMENTS ───────────────────────────── */
+.step-headline {
+  font-size: 26px; font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -.025em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.step-sub {
+  font-size: 14px; color: var(--text-2);
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 20px;
+  margin-bottom: 20px;
+}
+.tag-warn { background: var(--red-bg);   color: var(--red);    border: 1px solid var(--red-border); }
+.tag-ok   { background: var(--green-bg); color: var(--green);  border: 1px solid var(--green-border); }
+.tag-blue { background: var(--blue-bg);  color: var(--blue);   border: 1px solid var(--blue-border); }
+.tag-orange { background: var(--orange-light); color: var(--orange-dark); border: 1px solid var(--orange-border); }
+
+/* big number hero */
+.hero-number {
+  font-size: 80px; font-weight: 900;
+  letter-spacing: -.04em; line-height: 1;
+  margin-bottom: 6px;
+}
+.hero-number.orange { color: var(--orange); }
+.hero-number.red    { color: var(--red); }
+.hero-number.green  { color: var(--green); }
+.hero-number.dark   { color: var(--text-1); }
+
+/* ── NAV BAR ───────────────────────────────────── */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+}
+.btn-back {
+  display: flex; align-items: center; gap: 7px;
+  background: none; border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-2); cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-back:hover { background: var(--border); color: var(--text-1); }
+.btn-back:disabled { opacity: .3; pointer-events: none; }
+.btn-next {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--orange); border: none;
+  border-radius: 10px; padding: 14px 26px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: #fff; cursor: pointer;
+  transition: background .15s, transform .1s;
+  animation: pulse-cta 2.5s infinite;
+}
+.btn-next:hover  { background: var(--orange-dark); transform: translateY(-1px); }
+.btn-next:active { transform: translateY(0); }
+.btn-next.finish { background: var(--green); animation: none; box-shadow: 0 4px 20px rgba(22,163,74,.3); }
+.btn-next.finish:hover { background: #15803D; }
+
+/* ──────────────────────────────────────────────────
+   STEP 1 · O PROBLEMA
+────────────────────────────────────────────────── */
+.s1-main-card {
+  padding: 0;
+  margin-bottom: 12px;
+  border: 1.5px solid var(--red-border);
+  background: #fff;
+  overflow: hidden;
+}
+.s1-card-top {
+  padding: 32px 32px 24px;
+}
+.s1-number-block {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 16px 0 14px;
+}
+.s1-big-num {
+  font-size: 100px; font-weight: 900;
+  color: var(--red); letter-spacing: -.05em; line-height: 1;
+  opacity: 0;
+  animation: popIn .65s cubic-bezier(.22,.68,0,1.4) .28s forwards;
+}
+.s1-num-label {
+  font-size: 22px; font-weight: 700;
+  color: var(--text-2); letter-spacing: -.01em;
+  padding-bottom: 10px;
+}
+.s1-supporting {
+  font-size: 14px; color: var(--text-2);
+  line-height: 1.65; max-width: 480px;
+}
+.s1-impact-band {
+  background: var(--red-bg);
+  border-top: 1px solid var(--red-border);
+  padding: 16px 32px;
+  display: flex; align-items: center; gap: 12px;
+}
+.s1-impact-icon { font-size: 18px; flex-shrink: 0; }
+.s1-impact-text {
+  font-size: 13px; color: var(--red);
+  font-weight: 500; line-height: 1.5;
+}
+.s1-impact-text strong { font-weight: 700; }
+
+/* ──────────────────────────────────────────────────
+   STEP 2 · AUTOMAÇÃO
+────────────────────────────────────────────────── */
+.s2-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.s2-col {
+  padding: 24px;
+}
+.s2-col.before {
+  background: #FAFAFA;
+  border-right: 1px solid var(--border);
+}
+.s2-col.after {
+  background: var(--green-bg);
+}
+.s2-col-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.s2-col.before .s2-col-title { color: var(--text-3); }
+.s2-col.after  .s2-col-title { color: var(--green); }
+.s2-row {
+  display: flex; align-items: flex-start;
+  gap: 9px; margin-bottom: 12px;
+  font-size: 13px;
+}
+.s2-row:last-child { margin-bottom: 0; }
+.s2-row-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.s2-row-text { color: var(--text-2); line-height: 1.4; }
+.s2-col.after .s2-row-text { color: var(--text-1); font-weight: 500; }
+
+.s2-example-card {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.s2-ex-left {
+  flex-shrink: 0;
+}
+.s2-ex-number {
+  font-size: 48px; font-weight: 900;
+  color: var(--orange); letter-spacing: -.03em;
+  line-height: 1;
+}
+.s2-ex-label {
+  font-size: 12px; color: var(--text-3);
+  font-weight: 500; margin-top: 2px;
+}
+.s2-ex-divider {
+  width: 1px; height: 64px;
+  background: var(--border); flex-shrink: 0;
+}
+.s2-checks { display: flex; flex-direction: column; gap: 8px; }
+.s2-check-row {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 13px; font-weight: 500; color: var(--text-1);
+  opacity: 0;
+  animation: fadeIn .4s ease forwards;
+}
+.s2-check-circle {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--green-bg); border: 1.5px solid var(--green-border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.s2-check-circle svg {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: drawCheck .4s ease forwards;
+}
+
+/* Step 2 — stat banner */
+.s2-stat-banner {
+  padding: 22px 28px;
+  display: flex; align-items: center; gap: 20px;
+  background: linear-gradient(135deg, var(--green-bg) 0%, #fff 100%);
+  border-color: var(--green-border);
+}
+.s2-stat-num {
+  font-size: 52px; font-weight: 900;
+  color: var(--green); letter-spacing: -.03em;
+  line-height: 1; flex-shrink: 0;
+}
+.s2-stat-desc {
+  font-size: 15px; font-weight: 600;
+  color: var(--text-1); line-height: 1.4;
+}
+
+/* ──────────────────────────────────────────────────
+   STEP 3 · ROI
+────────────────────────────────────────────────── */
+.s3-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.s3-col {
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.s3-col.without {
+  background: #FAFAFA;
+}
+.s3-col.with {
+  background: var(--green-bg);
+  border-color: var(--green-border);
+}
+.s3-col-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.s3-col.without .s3-col-label { color: var(--text-3); }
+.s3-col.with    .s3-col-label { color: var(--green); }
+.s3-amount {
+  font-size: 32px; font-weight: 800;
+  letter-spacing: -.02em; line-height: 1;
+  margin-bottom: 4px;
+}
+.s3-col.without .s3-amount { color: var(--text-3); text-decoration: line-through; }
+.s3-col.with    .s3-amount { color: var(--text-1); }
+.s3-desc {
+  font-size: 11px; color: var(--text-3);
+  line-height: 1.4;
+}
+
+.s3-savings-card {
+  padding: 24px 28px;
+  background: linear-gradient(135deg, var(--orange-light) 0%, #FFF0E0 100%);
+  border: 1.5px solid var(--orange-border);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.s3-savings-left { flex: 1; }
+.s3-savings-label {
+  font-size: 12px; font-weight: 600;
+  color: var(--orange-dark); margin-bottom: 4px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.s3-savings-amount {
+  font-size: 52px; font-weight: 900;
+  color: var(--orange-dark); letter-spacing: -.03em;
+  line-height: 1;
+}
+.s3-savings-period {
+  font-size: 13px; color: var(--orange-dark);
+  opacity: .7; margin-top: 3px;
+}
+.s3-savings-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+.s3-proof-line {
+  font-size: 12px; color: var(--text-3);
+  margin-top: 12px; text-align: center;
+}
+.s3-proof-line strong { color: var(--text-2); }
+
+/* ──────────────────────────────────────────────────
+   STEP 4 · COMPLIANCE
+────────────────────────────────────────────────── */
+.s4-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 12px;
+}
+.s4-steps-card { padding: 28px; }
+.s4-step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeUp .45s cubic-bezier(.22,.68,0,1.1) forwards;
+}
+.s4-step-left {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0; flex-shrink: 0;
+}
+.s4-circle {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+}
+.s4c-done    { background: var(--green-bg);    border: 2px solid var(--green-border); color: var(--green); }
+.s4c-active  { background: var(--orange-light); border: 2px solid var(--orange);      color: var(--orange); animation: pulse-dot 2s infinite; }
+.s4c-pending { background: #F5F5FA;             border: 2px solid #E0E0F0;             color: var(--text-3); }
+.s4-line {
+  width: 2px; height: 24px;
+  background: var(--border); margin: 4px 0;
+  opacity: 0; animation: fadeIn .3s ease forwards;
+}
+.s4-body { padding: 4px 0 20px; }
+.s4-step-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.s4c-done   .s4-step-title { color: var(--text-1); }
+.s4c-active-title           { color: var(--orange-dark); }
+.s4c-pending-title          { color: var(--text-3); }
+.s4-step-desc { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+.s4-stat-col {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.s4-stat-card {
+  padding: 22px;
+  background: var(--text-1);
+  border-radius: 14px;
+  border: none;
+}
+.s4-stat-card.light {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+.s4-stat-val {
+  font-size: 42px; font-weight: 900;
+  color: var(--orange); letter-spacing: -.03em;
+  line-height: 1; margin-bottom: 5px;
+  opacity: 0;
+  animation: popIn .6s cubic-bezier(.22,.68,0,1.4) forwards;
+}
+.s4-stat-card.light .s4-stat-val { color: var(--text-1); }
+.s4-stat-lbl { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 500; }
+.s4-stat-card.light .s4-stat-lbl { color: var(--text-2); }
+.s4-contrast {
+  font-size: 11px; color: rgba(255,255,255,.35);
+  margin-top: 10px; line-height: 1.4;
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding-top: 10px;
+}
+
+/* ──────────────────────────────────────────────────
+   STEP 5 · ATIVAÇÃO
+────────────────────────────────────────────────── */
+.s5-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-bg); color: var(--green);
+  border: 1px solid var(--green-border);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 11px; font-weight: 700;
+  margin-bottom: 16px;
+}
+.s5-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse-dot 2s infinite;
+}
+.s5-big {
+  font-size: 72px; font-weight: 900;
+  color: var(--text-1); letter-spacing: -.04em;
+  line-height: 1; margin-bottom: 4px;
+}
+.s5-big-label {
+  font-size: 15px; font-weight: 600;
+  color: var(--text-2); margin-bottom: 0; line-height: 1.4;
+}
+
+/* Two-column layout: hero left, integrations right */
+.s5-layout {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.s5-hero-card {
+  padding: 26px 22px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.s5-integrations-card {
+  padding: 20px 22px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.s5-int-section-title {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 12px;
+}
+.s5-int-list { display: flex; flex-direction: column; gap: 7px; }
+.s5-int-row {
+  display: flex; align-items: center; gap: 11px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: 9px;
+  opacity: 0;
+  animation: fadeUp .38s cubic-bezier(.22,.68,0,1.1) forwards;
+}
+.s5-int-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 16px;
+}
+.s5-int-name {
+  flex: 1; font-size: 13px; font-weight: 600; color: var(--text-1);
+}
+.s5-int-status {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; color: var(--green);
+  white-space: nowrap;
+}
+.s5-int-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0;
+}
+
+.s5-trust {
+  padding: 18px 22px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+.s5-trust-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 500; color: var(--text-2);
+}
+.s5-trust-icon { font-size: 14px; }
+
+.s5-cta-card {
+  padding: 28px;
+  background: linear-gradient(135deg, #1C1208 0%, #2E1808 60%, #3A2010 100%);
+  border-radius: 14px;
+  border: none;
+  text-align: center;
+}
+.s5-cta-title {
+  font-size: 18px; font-weight: 800;
+  color: #fff; margin-bottom: 6px;
+  letter-spacing: -.01em;
+}
+.s5-cta-sub {
+  font-size: 13px; color: rgba(255,255,255,.55);
+  margin-bottom: 22px;
+}
+.btn-activate {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--orange); border: none;
+  border-radius: 10px; padding: 16px 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: #fff; cursor: pointer;
+  animation: pulse-cta 2s infinite;
+  transition: background .15s, transform .1s;
+  width: 100%; justify-content: center;
+}
+.btn-activate:hover { background: var(--orange-dark); transform: translateY(-1px); }
+.s5-no-charge {
+  font-size: 12px; color: rgba(255,255,255,.4);
+  margin-top: 12px;
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOP NAV -->
+  <div class="topnav">
+    <div class="brand"><div class="brand-dot"></div>Habilitar.me</div>
+    <button class="skip-btn" onclick="goTo(4)">Pular tour →</button>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="progress-label" id="p-label">Passo 1 de 5</span>
+      <span class="progress-count" id="p-count">O problema</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="p-fill" style="width:20%"></div>
+    </div>
+    <div class="step-dots" id="step-dots"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="step-content" id="content"></div>
+
+  <!-- NAV -->
+  <div class="nav-bar">
+    <button class="btn-back" id="btn-back" onclick="nav(-1)" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Voltar
+    </button>
+    <button class="btn-next" id="btn-next" onclick="nav(1)">
+      <span id="btn-label">Ver como evitar isso</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+</div>
+
+<script>
+const STEPS = [
+  {
+    label: 'O problema',
+    btnLabel: 'Ver como evitar isso',
+    render: step1,
+  },
+  {
+    label: 'A automação',
+    btnLabel: 'Ver quanto você economiza',
+    render: step2,
+  },
+  {
+    label: 'Sua economia',
+    btnLabel: 'Ver proteção contra burocracia',
+    render: step3,
+  },
+  {
+    label: 'Compliance',
+    btnLabel: 'Ver como conectar sua frota',
+    render: step4,
+  },
+  {
+    label: 'Ativar agora',
+    btnLabel: 'Ativar monitoramento da frota',
+    render: step5,
+    finish: true,
+  },
+];
+
+let cur = 0;
+
+function dots() {
+  document.getElementById('step-dots').innerHTML = STEPS.map((_, i) => {
+    const c = i < cur ? 'done' : i === cur ? 'active' : '';
+    return `<div class="step-dot ${c}"></div>`;
+  }).join('');
+}
+
+function updateUI() {
+  const s = STEPS[cur];
+  document.getElementById('p-label').textContent = `Passo ${cur + 1} de ${STEPS.length}`;
+  document.getElementById('p-count').textContent  = s.label;
+  document.getElementById('p-fill').style.width   = `${((cur + 1) / STEPS.length) * 100}%`;
+  document.getElementById('btn-back').disabled    = cur === 0;
+  document.getElementById('btn-label').textContent = s.btnLabel;
+  const btn = document.getElementById('btn-next');
+  btn.className = 'btn-next' + (s.finish ? ' finish' : '');
+  dots();
+}
+
+function goTo(idx, dir = 1) {
+  const el = document.getElementById('content');
+  el.classList.add('out');
+  setTimeout(() => {
+    el.classList.remove('out');
+    cur = Math.max(0, Math.min(STEPS.length - 1, idx));
+    updateUI();
+    STEPS[cur].render(el);
+    el.classList.add(dir >= 0 ? 'in' : 'in-back');
+    setTimeout(() => el.classList.remove('in', 'in-back'), 380);
+    setTimeout(afterRender, 60);
+  }, 200);
+}
+
+function nav(d) {
+  const next = cur + d;
+  if (next < 0 || next >= STEPS.length) return;
+  goTo(next, d);
+}
+
+function afterRender() {
+  // progress bars for step 3
+  const b1 = document.getElementById('bar-without');
+  const b2 = document.getElementById('bar-with');
+  if (b1) { b1.style.transformOrigin = 'left'; b1.style.animation = 'barFill 1s ease .2s forwards'; }
+  if (b2) { b2.style.transformOrigin = 'left'; b2.style.animation = 'barFill 1s ease .4s forwards'; }
+}
+
+/* ── STEP RENDERERS ──────────────────────────── */
+
+function step1(el) {
+  el.innerHTML = `
+    <div class="step-headline a1">Encontramos 42 multas que podem ter passado despercebidas.</div>
+
+    <div class="card s1-main-card a2">
+      <div class="s1-card-top">
+        <span class="tag tag-warn">⚠️ Situação identificada na sua frota</span>
+        <div class="s1-number-block">
+          <div class="s1-big-num">42</div>
+          <div class="s1-num-label">multas</div>
+        </div>
+        <div class="s1-supporting a3">
+          A maioria das empresas só descobre essas infrações depois que o prazo para recurso ou desconto já venceu — e acaba pagando o valor integral sem precisar.
+        </div>
+      </div>
+      <div class="s1-impact-band a4">
+        <span class="s1-impact-icon">💸</span>
+        <div class="s1-impact-text">Gestores de frota perdem em média <strong>R$ 18.000 por ano</strong> por falta de monitoramento ativo.</div>
+      </div>
+    </div>
+  `;
+}
+
+function step2(el) {
+  el.innerHTML = `
+    <div class="step-headline a1">Sua frota monitorada. No automático.</div>
+
+    <div class="s2-compare a2">
+      <div class="s2-col before">
+        <div class="s2-col-title">Sem monitoramento</div>
+        <div class="s2-row"><span class="s2-row-icon">❌</span><span class="s2-row-text">Consulta manual</span></div>
+        <div class="s2-row"><span class="s2-row-icon">❌</span><span class="s2-row-text">Descobre tarde</span></div>
+        <div class="s2-row"><span class="s2-row-icon">❌</span><span class="s2-row-text">Perde descontos</span></div>
+        <div class="s2-row"><span class="s2-row-icon">❌</span><span class="s2-row-text">Controle descentralizado</span></div>
+      </div>
+      <div class="s2-col after">
+        <div class="s2-col-title">Com Frota Protegida</div>
+        <div class="s2-row"><span class="s2-row-icon">✅</span><span class="s2-row-text">Detecção automática</span></div>
+        <div class="s2-row"><span class="s2-row-icon">✅</span><span class="s2-row-text">Alerta imediato</span></div>
+        <div class="s2-row"><span class="s2-row-icon">✅</span><span class="s2-row-text">Até 40% de desconto</span></div>
+        <div class="s2-row"><span class="s2-row-icon">✅</span><span class="s2-row-text">Painel centralizado</span></div>
+      </div>
+    </div>
+
+    <div class="card s2-stat-banner a3">
+      <div class="s2-stat-num pop" style="animation-delay:.3s">100%</div>
+      <div class="s2-stat-desc">das multas detectadas<br/>antes do prazo</div>
+    </div>
+  `;
+}
+
+function chk(text, delay) {
+  return `
+    <div class="s2-check-row" style="animation-delay:${delay};">
+      <div class="s2-check-circle">
+        <svg width="11" height="9" viewBox="0 0 11 9" fill="none" style="animation-delay:${delay}">
+          <path d="M1 4.5L4 7.5L10 1" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      ${text}
+    </div>`;
+}
+
+function step3(el) {
+  el.innerHTML = `
+    <div class="step-headline a1">Sua frota tem R$ 821,70 em multas este mês.</div>
+    <div class="step-sub a2">Com monitoramento ativo, você paga menos — e nunca perde o prazo para recurso ou desconto.</div>
+
+    <div class="s3-comparison a3">
+      <div class="s3-col without">
+        <div class="s3-col-label">Sem monitoramento</div>
+        <div class="s3-amount">R$ 1.369,12</div>
+        <div class="s3-desc">Valor cheio, sem desconto,<br/>prazos perdidos</div>
+      </div>
+      <div class="s3-col with">
+        <div class="s3-col-label">Com Frota Protegida</div>
+        <div class="s3-amount">R$ 821,70</div>
+        <div class="s3-desc">Com 40% OFF via PIX,<br/>todos os prazos garantidos</div>
+      </div>
+    </div>
+
+    <div class="card s3-savings-card a4">
+      <div class="s3-savings-left">
+        <div class="s3-savings-label">Você economiza</div>
+        <div class="s3-savings-amount pop" style="animation-delay:.35s">R$ 547</div>
+        <div class="s3-savings-period">só neste mês</div>
+      </div>
+      <div style="flex:1; text-align:right;">
+        <div style="font-size:12px; color:var(--orange-dark); font-weight:600; margin-bottom:6px;">Também incluído</div>
+        <div style="font-size:12px; color:var(--text-2); line-height:1.7;">
+          ✓ IPVA e licenciamento<br/>
+          ✓ Alertas de vencimento<br/>
+          ✓ Visão de 83 veículos
+        </div>
+      </div>
+    </div>
+
+    <div class="s3-proof-line a5">
+      Clientes economizam em média <strong>38% do valor total das multas</strong> no primeiro ano.
+    </div>
+  `;
+}
+
+function step4(el) {
+  const steps = [
+    { state:'done',    icon:'✓', title:'Infração recebida',      desc:'A multa é detectada automaticamente e vinculada ao veículo.',       cd:.1,  ld:.22 },
+    { state:'done',    icon:'✓', title:'Condutor notificado',    desc:'Notificação enviada automaticamente ao responsável pelo veículo.',    cd:.2,  ld:.32 },
+    { state:'active',  icon:'→', title:'Assinatura do condutor', desc:'O condutor assina a indicação no próprio celular — sem papel.',       cd:.3,  ld:.42 },
+    { state:'pending', icon:'○', title:'FICI enviado ao DETRAN', desc:'Formulário enviado ao órgão de trânsito automaticamente.',            cd:.4,  ld:null },
+  ];
+
+  const stepsHtml = steps.map((s, i) => {
+    const circleClass = `s4-circle s4c-${s.state}`;
+    const titleClass  = s.state === 'active' ? 's4-step-title s4c-active-title'
+                      : s.state === 'pending' ? 's4-step-title s4c-pending-title'
+                      : 's4-step-title';
+    const line = s.ld !== null
+      ? `<div class="s4-line" style="animation-delay:${s.ld}s;"></div>` : '';
+    return `
+      <div class="s4-step-row" style="animation-delay:${s.cd}s;">
+        <div class="s4-step-left">
+          <div class="${circleClass}">${s.icon}</div>
+          ${line}
+        </div>
+        <div class="s4-body">
+          <div class="${titleClass}">${s.title}</div>
+          <div class="s4-step-desc">${s.desc}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="step-headline a1">Indicar o condutor nunca foi tão simples.</div>
+    <div class="step-sub a2">O motorista recebe uma notificação, assina no celular e pronto. Sem formulário manual, sem papel, sem ligação.</div>
+    <div class="s4-layout">
+      <div class="card s4-steps-card a3">
+        <div class="s4-steps">${stepsHtml}</div>
+      </div>
+      <div class="s4-stat-col a4">
+        <div class="card s4-stat-card">
+          <div class="s4-stat-val" style="animation-delay:.4s">2 dias</div>
+          <div class="s4-stat-lbl">tempo médio de conclusão</div>
+          <div class="s4-contrast">Antes levava semanas de formulário manual e ligações.</div>
+        </div>
+        <div class="card s4-stat-card light">
+          <div class="s4-stat-val" style="animation-delay:.55s">98%</div>
+          <div class="s4-stat-lbl">taxa de aceite pelos condutores</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function step5(el) {
+  el.innerHTML = `
+    <div class="s5-layout a1">
+      <div class="s5-hero-card">
+        <div class="s5-badge"><div class="s5-badge-dot"></div>Tudo pronto</div>
+        <div class="s5-big pop" style="animation-delay:.2s">83</div>
+        <div class="s5-big-label">veículos<br/>protegidos</div>
+      </div>
+      <div class="s5-integrations-card">
+        <div class="s5-int-section-title">Integrações conectadas</div>
+        <div class="s5-int-list">
+          ${s5int('🏛️', '#EEF2FF', 'Gov.br',     'Conectado',   '.08s')}
+          ${s5int('📋', '#FFF5EF', 'SNE',         'Ativo',       '.18s')}
+          ${s5int('📱', '#F0FDF4', 'App CNH',     'Configurado', '.28s')}
+          ${s5int('🔐', '#F5F3FF', 'e-CNPJ A1',  'Verificado',  '.38s')}
+        </div>
+      </div>
+    </div>
+
+    <div class="s5-trust a2">
+      <div class="s5-trust-item"><span class="s5-trust-icon">🔒</span>Teste gratuito de 7 dias</div>
+      <div class="s5-trust-item"><span class="s5-trust-icon">✕</span>Sem cobrança hoje</div>
+      <div class="s5-trust-item"><span class="s5-trust-icon">↩</span>Cancele quando quiser</div>
+    </div>
+
+    <div class="s5-cta-card a3" style="margin-top:12px;">
+      <div class="s5-cta-title">Sua frota protegida em menos de 2 minutos.</div>
+      <div class="s5-cta-sub">Ative o monitoramento e comece a economizar agora.</div>
+      <button class="btn-activate">
+        Ativar monitoramento da frota
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="s5-no-charge">Sem fidelidade &nbsp;·&nbsp; Cancele quando quiser</div>
+    </div>
+  `;
+}
+
+function s5int(icon, iconBg, name, status, delay) {
+  return `
+    <div class="s5-int-row" style="animation-delay:${delay}">
+      <div class="s5-int-icon" style="background:${iconBg}">${icon}</div>
+      <div class="s5-int-name">${name}</div>
+      <div class="s5-int-status"><div class="s5-int-dot"></div>${status}</div>
+    </div>`;
+}
+
+// ── INIT ────────────────────────────────────────
+updateUI();
+STEPS[0].render(document.getElementById('content'));
+document.getElementById('content').classList.add('in');
+setTimeout(() => document.getElementById('content').classList.remove('in'), 380);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'Enter') nav(1);
+  if (e.key === 'ArrowLeft')  nav(-1);
+});
+</script>
+</body>
+</html>
